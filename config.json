@@ -23,6 +23,14 @@
           "alterId": 64
         }
       ]
+    },
+    "streamSettings": {
+        "network": "ws",
+        "security": "auto",
+        "wsSettings": {
+            "connectionReuse": true,
+            "path": "/v2/"
+        }
     }
   }],
   "outbounds": [{
