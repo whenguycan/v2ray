@@ -1,52 +1,62 @@
 {
-  "inbounds": [{
-    "port": 22863,
-    "protocol": "vmess",
-    "settings": {
-      "clients": [
-        {
-          "id": "4c47c5af-234b-4740-ad86-411fa6b122c2",
-          "level": 1,
-          "alterId": 64
-        }
-      ]
-    }
-  },{
-    "port": 22865,
-    "listen": "127.0.0.1",
-    "protocol": "vmess",
-    "settings": {
-      "clients": [
-        {
-          "id": "4c47c5af-234b-4740-ad86-411fa6b122c3",
-          "level": 1,
-          "alterId": 64
-        }
-      ]
+  "log": {
+        "access": "/var/log/v2ray/access.log",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "warning"
     },
-    "streamSettings": {
-        "network": "ws",
-        "security": "auto",
+  "inbounds": [
+    {
+    "port":17334,
+      "listen": "127.0.0.1", 
+      "tag": "vmess-in", 
+      "protocol": "vmess", 
+      "settings": {
+        "clients": [
+          {
+	  "id":"0bbd7425-bcb0-4097-868c-7bd92c8d62ec",
+            "alterId": 64
+          }
+        ]
+      }, 
+      "streamSettings": {
+        "network": "ws", 
         "wsSettings": {
-            "connectionReuse": true,
-            "path": "/v2/"
+	  "path":"/150e8e6f9c/"
         }
+      }
     }
-  }],
-  "outbounds": [{
-    "protocol": "freedom",
-    "settings": {}
-  },{
-    "protocol": "blackhole",
-    "settings": {},
-    "tag": "blocked"
-  }],
+  ], 
+  "outbounds": [
+    {
+      "protocol": "freedom", 
+      "settings": { }, 
+      "tag": "direct"
+    }, 
+    {
+      "protocol": "blackhole", 
+      "settings": { }, 
+      "tag": "blocked"
+    }
+  ], 
+  "dns": {
+    "servers": [
+      "https+local://1.1.1.1/dns-query",
+	  "1.1.1.1",
+	  "1.0.0.1",
+	  "8.8.8.8",
+	  "8.8.4.4",
+	  "localhost"
+    ]
+  },
   "routing": {
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "ip": ["geoip:private"],
-        "outboundTag": "blocked"
+        "inboundTag": [
+          "vmess-in"
+        ],
+        "outboundTag": "direct"
       }
     ]
   }
