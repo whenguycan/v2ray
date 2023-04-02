@@ -1,0 +1,13 @@
+yum install epel-release
+wget -O /etc/yum.repos.d/epel.repo https://mirrors.aliyun.com/repo/epel-7.repo
+yum update
+yum install nginx net-tools
+systemctl enable nginx
+systemctl start nginx
+firewall-cmd --add-port=80/tcp --permanent
+firewall-cmd --add-port=443/tcp --permanent
+firewall-cmd --add-port=8443/tcp --permanent
+firewall-cmd --reload
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/server.key -out /etc/ssl/server.crt  -subj "/C=CN/ST=GD/L=SZ/O=jim/OU=dev/CN=[[domain]]/emailAddress=jim_dev@[[domain]]"
+wget https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+bash install-release.sh
